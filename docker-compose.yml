@@ -2,8 +2,7 @@ version: '3.7'
 
 services:
   product-list-app:
-    build:
-      context: .
+    build: .
     container_name: product-list-app
     ports:
       - 3000:3000
