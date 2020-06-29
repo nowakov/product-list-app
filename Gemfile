@@ -15,7 +15,11 @@ group :development, :test do
   gem 'fabrication'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 4.0.0'
+end
+
+group :test do
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'database_cleaner-active_record'
 end
 
 group :development do
