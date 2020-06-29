@@ -4,6 +4,8 @@ services:
   product-list-app:
     build: .
     container_name: product-list-app
+    stdin_open: true
+    tty: true
     ports:
       - 3000:3000
     environment:
