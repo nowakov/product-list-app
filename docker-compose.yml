@@ -6,7 +6,7 @@ services:
       context: .
     container_name: product-list-app
     ports:
-      - 3100:3000
+      - 3000:3000
     environment:
       RAILS_ENV: development
     volumes:
