@@ -7,9 +7,9 @@ module API
         product = Product.new(product_params)
 
         if product.save
-          render json: product, status: 201
+          render json: product, status: :created
         else
-          render json: product.errors, status: 422
+          render json: product.errors, status: :unprocessable_entity
         end
       end
 
