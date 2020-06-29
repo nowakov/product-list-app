@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  product-list-app:
+    build:
+      context: .
+    container_name: product-list-app
+    ports:
+      - 3100:3000
+    environment:
+      RAILS_ENV: development
+    volumes:
+      - .:/ruby/product-list-app
+    restart: on-failure
