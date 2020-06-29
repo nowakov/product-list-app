@@ -13,7 +13,9 @@ gem 'sqlite3', '~> 1.4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'fabrication'
   gem 'rspec-rails', '~> 4.0.0'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development do
