@@ -34,4 +34,52 @@ describe 'POST /api/v1/products' do
       expect(json_response[:data][:id]).not_to be_empty
     end
   end
+
+  context 'when product with same name already exists' do
+    before { Fabricate.create(:product, name: product_params[:data][:attributes][:name]) }
+
+    it 'returns status 422' do
+      request_call
+
+      expect(response.status).to eq(422)
+    end
+
+    it 'returns specific error message' do
+      request_call
+
+      expect(json_response[:errors][0][:detail]).to eq('has already been taken')
+    end
+  end
+
+  context 'when params are invalid' do
+    before { product_params[:data][:attributes][:price] = 'invalid' }
+
+    it 'return status 422' do
+      request_call
+
+      expect(response.status).to eq(422)
+    end
+
+    it 'returns specific error message' do
+      request_call
+
+      expect(json_response[:errors][0][:detail]).to eq('is not a number')
+    end
+  end
+
+  context 'when attributes key is missing in params' do
+    before { product_params[:data][:attributes] = nil }
+
+    it 'returns status 422' do
+      request_call
+
+      expect(response.status).to eq(422)
+    end
+
+    it 'returns specific error message' do
+      request_call
+
+      expect(json_response[:errors][0][:detail]).to eq('param is missing or the value is empty: attributes')
+    end
+  end
 end
