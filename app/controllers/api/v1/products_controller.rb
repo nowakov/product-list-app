@@ -3,6 +3,10 @@
 module API
   module V1
     class ProductsController < ApplicationController
+      def index
+        render json: Product.all, status: :ok
+      end
+
       def create
         product = Product.new(product_params)
 
