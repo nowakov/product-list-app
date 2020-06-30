@@ -33,6 +33,8 @@ module API
         end
       end
 
+      private
+
       def product_params
         params.require(:data).require(:attributes).permit(:name, :description, :price, tags: [])
       end

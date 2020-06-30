@@ -31,6 +31,8 @@ module API
         end
       end
 
+      private
+
       def tag_params
         params.require(:data).require(:attributes).permit(:title)
       end
