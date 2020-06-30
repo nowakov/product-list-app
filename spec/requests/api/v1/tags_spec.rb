@@ -83,7 +83,7 @@ describe 'Tags' do
     end
   end
 
-  describe 'PATCH /api/v1/tags' do
+  describe 'PATCH /api/v1/tags/:id' do
     let(:tag) { Fabricate(:tag) }
     let(:new_title) { 'Updated title' }
     let(:tag_params) do

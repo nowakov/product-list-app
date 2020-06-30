@@ -19,6 +19,18 @@ module API
         end
       end
 
+      def update
+        product = Product.find(params[:id])
+
+        if product.update(product_params)
+          render json: product, status: :ok
+        else
+          render json: product,
+                 serializer: ActiveModel::Serializer::ErrorSerializer,
+                 status: :unprocessable_entity
+        end
+      end
+
       def product_params
         params.require(:data).require(:attributes).permit(:name, :description, :price)
       end

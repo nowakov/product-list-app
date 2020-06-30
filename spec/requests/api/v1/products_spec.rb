@@ -41,6 +41,7 @@ describe 'Products' do
       end
     end
   end
+
   describe 'POST /api/v1/products' do
     let(:product_params) do
       {
@@ -119,6 +120,46 @@ describe 'Products' do
         request_call
 
         expect(json_response[:errors][0][:detail]).to eq('param is missing or the value is empty: attributes')
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/products/:id' do
+    let(:product) { Fabricate(:product) }
+    let(:new_name) { 'Pepsi Zero' }
+    let(:product_params) do
+      {
+        data: {
+          type: 'undefined',
+          id: product.id,
+          attributes: {
+            name: new_name
+          }
+        }
+      }
+    end
+    let(:request_call) do
+      patch(api_v1_product_url(product), params: product_params.to_json,
+                                         headers: { CONTENT_TYPE: 'application/json' })
+    end
+
+    context 'when params are valid' do
+      it 'returns status 200' do
+        request_call
+
+        expect(response.status).to eq(200)
+      end
+
+      it 'returns same updated object\'s id' do
+        request_call
+
+        expect(json_response[:data][:id]).to eq(product.id.to_s)
+      end
+
+      it 'returns updated title' do
+        request_call
+
+        expect(json_response[:data][:attributes][:name]).to eq(new_name)
       end
     end
   end
