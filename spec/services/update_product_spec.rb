@@ -15,7 +15,7 @@ describe UpdateProduct do
 
   before { tag }
 
-  it 'changes products name' do
+  it 'changes product\'s name' do
     expect { service_call }.to change { product.name }.from('Pepsi').to('Pepsi Zero')
   end
 
@@ -27,5 +27,13 @@ describe UpdateProduct do
     expect { service_call }.to change { product.reload.tags.pluck(:title).include?('Calorie Free') }
       .from(false)
       .to(true)
+  end
+
+  context 'when updating name with same name' do
+    before { update_params[:name] = 'Pepsi' }
+
+    it 'doesn\'t change product\'s name' do
+      expect { service_call }.not_to change { product.name }
+    end
   end
 end

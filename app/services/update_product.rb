@@ -4,9 +4,10 @@ class UpdateProduct < BaseService
   context :product, :update_params
 
   def call
-    map_tags_to_records if update_params[:tags].present?
+    assign_tags if update_params[:tags].present?
+    product.assign_attributes(update_params)
 
-    if product.update(update_params)
+    if product.save
       @output[:product] = product
     else
       @errors[:product] = product
@@ -15,9 +16,9 @@ class UpdateProduct < BaseService
 
   private
 
-  def map_tags_to_records
-    update_params[:tags] = update_params[:tags].map do |tag_title|
-      Tag.find_or_initialize_by(title: tag_title)
-    end.compact
+  def assign_tags
+    tag_titles = update_params.delete(:tags)
+
+    product.tags << tag_titles.map { |title| Tag.find_or_initialize_by(title: title) }
   end
 end
