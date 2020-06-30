@@ -2,4 +2,6 @@
 
 class TagSerializer < ActiveModel::Serializer
   attributes :title
+
+  has_many :products
 end

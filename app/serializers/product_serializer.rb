@@ -2,4 +2,6 @@
 
 class ProductSerializer < ActiveModel::Serializer
   attributes :name, :description, :price
+
+  has_many :tags
 end
