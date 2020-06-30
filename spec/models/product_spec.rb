@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Product do
   let(:product) { Fabricate(:product) }
 
+  it { is_expected.to have_and_belong_to_many(:tags) }
+
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:price) }
   it { is_expected.to validate_numericality_of(:price) }

@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Tag do
   let(:tag) { Fabricate(:tag) }
 
+  it { is_expected.to have_and_belong_to_many(:products) }
+
   it { is_expected.to validate_presence_of(:title) }
 
   it 'validates uniqueness of title' do

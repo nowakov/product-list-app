@@ -12,3 +12,5 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+Rails/HasAndBelongsToMany:
+  Enabled: false
