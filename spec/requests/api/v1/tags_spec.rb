@@ -3,6 +3,45 @@
 require 'rails_helper'
 
 describe 'Tags' do
+  describe 'GET /api/v1/tags' do
+    let(:request_call) do
+      get(api_v1_tags_url)
+    end
+
+    context 'when tags exist' do
+      before do
+        Fabricate(:tag, title: 'Beverage')
+        Fabricate(:tag, title: 'Calorie Free')
+      end
+
+      it 'returns status 200' do
+        request_call
+
+        expect(response.status).to eq(200)
+      end
+
+      it 'returns all tags' do
+        request_call
+
+        expect(json_response[:data].size).to eq(Tag.count)
+      end
+    end
+
+    context 'when there are no tags' do
+      it 'returns status 200' do
+        request_call
+
+        expect(response.status).to eq(200)
+      end
+
+      it 'returns all tags' do
+        request_call
+
+        expect(json_response[:data]).to eq([])
+      end
+    end
+  end
+
   describe 'POST /api/v1/tags' do
     let(:tag_params) do
       {

@@ -3,6 +3,10 @@
 module API
   module V1
     class TagsController < ApplicationController
+      def index
+        render json: Tag.all, status: :ok
+      end
+
       def create
         tag = Tag.new(tag_params)
 
