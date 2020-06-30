@@ -33,7 +33,7 @@ describe UpdateProduct do
     before { update_params[:name] = 'Pepsi' }
 
     it 'doesn\'t change product\'s name' do
-      expect { service_call }.not_to change { product.name }
+      expect { service_call }.not_to(change { product.name })
     end
   end
 end
