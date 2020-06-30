@@ -22,10 +22,12 @@ module API
       def update
         product = Product.find(params[:id])
 
-        if product.update(product_params)
-          render json: product, status: :ok
+        result = UpdateProduct.with(product: product, update_params: product_params)
+
+        if result.success?
+          render json: result.output[:product], status: :ok
         else
-          render json: product,
+          render json: product.errors[:product],
                  serializer: ActiveModel::Serializer::ErrorSerializer,
                  status: :unprocessable_entity
         end
