@@ -22,7 +22,7 @@ describe 'POST /api/v1/products' do
   end
 
   context 'when params are valid' do
-    it 'returns status 200' do
+    it 'returns status 201' do
       request_call
 
       expect(response.status).to eq(201)
