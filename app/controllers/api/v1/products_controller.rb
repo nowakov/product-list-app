@@ -34,7 +34,7 @@ module API
       end
 
       def product_params
-        params.require(:data).require(:attributes).permit(:name, :description, :price)
+        params.require(:data).require(:attributes).permit(:name, :description, :price, tags: [])
       end
     end
   end
