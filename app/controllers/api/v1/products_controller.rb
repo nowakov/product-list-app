@@ -33,6 +33,20 @@ module API
         end
       end
 
+      def destroy
+        product = Product.find(params[:id])
+
+        result = DestroyProduct.with(product: product)
+
+        if result.success?
+          render json: product, status: :ok
+        else
+          render json: product,
+                 serializer: ActiveModel::Serializer::ErrorSerializer,
+                 status: :unprocessable_entity
+        end
+      end
+
       private
 
       def product_params

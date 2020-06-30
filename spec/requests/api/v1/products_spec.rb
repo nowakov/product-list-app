@@ -181,4 +181,46 @@ describe 'Products' do
       end
     end
   end
+
+  describe 'DELETE /api/v1/products/:id' do
+    let(:product) { Fabricate(:product) }
+    let(:request_call) do
+      delete(api_v1_product_url(product))
+    end
+
+    it 'returns status 200' do
+      request_call
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'removes product from DB' do
+      product
+
+      expect { request_call }.to change { Product.count }.from(1).to(0)
+    end
+
+    context 'when product has tags' do
+      before do
+        product.tags << Fabricate(:tag)
+        product.save
+      end
+
+      it 'returns status 200' do
+        request_call
+
+        expect(response.status).to eq(200)
+      end
+
+      it 'removes product from DB' do
+        product
+
+        expect { request_call }.to change { Product.count }.from(1).to(0)
+      end
+
+      it 'doesn\'t remove any tag from db' do
+        expect { request_call }.not_to(change { Tag.count })
+      end
+    end
+  end
 end
