@@ -162,5 +162,23 @@ describe 'Products' do
         expect(json_response[:data][:attributes][:name]).to eq(new_name)
       end
     end
+
+    context 'when product doesn\'t exist' do
+      let(:request_call) do
+        patch(api_v1_product_url(999_999), params: product_params.to_json,
+                                           headers: { CONTENT_TYPE: 'application/json' })
+      end
+      it 'returns status 404' do
+        request_call
+
+        expect(response.status).to eq(404)
+      end
+
+      it 'returns specific error message' do
+        request_call
+
+        expect(json_response[:errors][0][:detail]).to eq('record not found')
+      end
+    end
   end
 end

@@ -121,5 +121,23 @@ describe 'Tags' do
         expect(json_response[:data][:attributes][:title]).to eq(new_title)
       end
     end
+
+    context 'when tag doesn\'t exist' do
+      let(:request_call) do
+        patch(api_v1_tag_url(999_999), params: tag_params.to_json,
+                                       headers: { CONTENT_TYPE: 'application/json' })
+      end
+      it 'returns status 404' do
+        request_call
+
+        expect(response.status).to eq(404)
+      end
+
+      it 'returns specific error message' do
+        request_call
+
+        expect(json_response[:errors][0][:detail]).to eq('record not found')
+      end
+    end
   end
 end
